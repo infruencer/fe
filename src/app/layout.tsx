@@ -1,3 +1,4 @@
+import React from 'react';
 import './globals.css';
 import { Open_Sans } from 'next/font/google';
 import { Metadata } from 'next';
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className={openSans.className}>
+    <html lang="en" className={openSans.className}>
       <body>
         <QueryProvider>
           <ReduxProvider>
@@ -26,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <StyledComponents>
                 <header></header>
                 <main>{children}</main>
-                <div id='portal' />
+                <div id="portal" />
               </StyledComponents>
             </ReactCookiesProvider>
           </ReduxProvider>
