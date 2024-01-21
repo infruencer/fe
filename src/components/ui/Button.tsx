@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface IButtonProps {
   text: string;
   onClick: () => void;
