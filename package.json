@@ -31,12 +31,12 @@
     "react-spinners": "^0.13.8",
     "styled-components": "^6.1.8",
     "styled-reset": "^4.5.2",
-    "typescript": "4.9.5",
+    "typescript": "^5.3.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",

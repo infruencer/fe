@@ -6,6 +6,8 @@ import StyledComponents from '@/lib/StyledComponents';
 import QueryProvider from '@/lib/QueryProvider';
 import ReduxProvider from '@/lib/ReduxProvider';
 import ReactCookiesProvider from '@/lib/CookiesProvider';
+import Header from '@/components/layout/Header';
+import Main from '@/components/layout/Main';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
@@ -25,8 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ReduxProvider>
             <ReactCookiesProvider>
               <StyledComponents>
-                <header></header>
-                <main>{children}</main>
+                <Header />
+                <Main>{children}</Main>
                 <div id="portal" />
               </StyledComponents>
             </ReactCookiesProvider>
