@@ -36,6 +36,7 @@ export const Button: FC<IButtonProps> = ({
 const StyledButton = styled.button<{ theme: string; padding?: string }>`
   width: 350px;
   height: 55px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;

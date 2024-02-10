@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { ButtonTheme } from '@/constants/ui-button.constant';
 import { Button } from '@/components/ui/Button';
-import { useRouter } from 'next/navigation';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useRouter } from 'next/navigation';
 
 /**
  * 로그인 페이지
@@ -26,13 +26,14 @@ const Login: FC = () => {
    * @param code: 코드 데이터
    */
   const handleGoogleLoginSuccess = async (code: any) => {
-    console.log('code => ', code);
-    // const response = await fetch('/api/auth/google-login', {
-    //   method: 'POST',
-    //   body: JSON.stringify(res),
-    // });
-    // console.log('response => ', response);
-    router.push('/my-diary');
+    const { status } = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+    if (status === 200) {
+      router.push('/my-diary');
+    }
   };
 
   /**
@@ -40,7 +41,7 @@ const Login: FC = () => {
    */
   const googleLogin = useGoogleLogin({
     scope: 'email profile',
-    onSuccess: async ({ code }) => handleGoogleLoginSuccess(code),
+    onSuccess: ({ code }) => handleGoogleLoginSuccess(code),
     onError: (error) => console.error(error),
     flow: 'auth-code',
   });
