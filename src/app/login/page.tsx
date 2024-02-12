@@ -26,7 +26,7 @@ const Login: FC = () => {
    * @param code: 코드 데이터
    */
   const handleGoogleLoginSuccess = async (code: any) => {
-    const { status } = await fetch('/api/auth/login', {
+    const { status } = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code }),
@@ -53,18 +53,9 @@ const Login: FC = () => {
           <Image src={'/static/images/logo_big.png'} alt={'logo'} width={330} height={68} />
           <Buttons>
             <Button text={'구글 로그인'} onClick={googleLogin} theme={ButtonTheme.GOOGLE}>
-              <Image
-                src={'/static/images/google.png'}
-                width={23}
-                height={23}
-                alt={'google login'}
-              />
+              <Image src={'/static/images/google.png'} width={23} height={23} alt={'google login'} />
             </Button>
-            <Button
-              text={'이메일 로그인·회원가입'}
-              onClick={handleLogin}
-              theme={ButtonTheme.ORANGE}
-            />
+            <Button text={'이메일 로그인·회원가입'} onClick={handleLogin} theme={ButtonTheme.ORANGE} />
           </Buttons>
         </>
       ) : (

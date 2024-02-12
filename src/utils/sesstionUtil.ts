@@ -2,33 +2,38 @@ import { getFirebaseData, setFirebaseData } from '@/lib/firebase';
 import { NextApiRequest, NextApiResponse } from 'next';
 import CryptoJS from 'crypto-js';
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY || '';
 
 /**
  * 토큰 발급
- * @param code: 구글 로그인 반환 코드
  */
 const issueToken = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log('issueToken');
-  const response = await fetch(`${API_BASE_URL}/api/v1/login/google?code=${req.body.code}`).then((res) => res.json());
-  if (response && response.accessToken) {
+  if (req.body.code) {
     try {
-      // 토큰 데이터 암호화
-      const cookieKey = CryptoJS.AES.encrypt(JSON.stringify(response.accessToken), SECRET_KEY)
-        .toString()
-        .replaceAll('/', ''); // 파이어베이스 경로 인식 막기
+      const response = await fetch(`${API_BASE_URL}/api/v1/login/google?code=${req.body.code}`).then((res) =>
+        res.json(),
+      );
+      if (response && response.accessToken) {
+        // 토큰 데이터 암호화
+        const cookieKey = CryptoJS.AES.encrypt(JSON.stringify(response.accessToken), SECRET_KEY)
+          .toString()
+          .replaceAll('/', ''); // 파이어베이스 경로 인식 막기
 
-      // 쿠키에 토큰 키 저장
-      res.setHeader('Set-Cookie', `TOKEN_KEY=${cookieKey}; Max-Age=3600; Path=/`);
+        // 쿠키에 토큰 키 저장
+        res.setHeader('Set-Cookie', `TOKEN_KEY=${cookieKey}; Max-Age=3600; Path=/`);
 
-      // 파이어베이스에 토큰 데이터 저장
-      setFirebaseData(cookieKey, response.accessToken);
+        // 파이어베이스에 토큰 데이터 저장
+        setFirebaseData(cookieKey, response.accessToken);
+      } else {
+        console.error('fail issue access token');
+      }
     } catch (error) {
       console.error('error => ', error);
     }
   } else {
-    console.error('fail issue access token');
+    console.error('google login code not found');
   }
 };
 
