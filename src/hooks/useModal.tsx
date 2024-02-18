@@ -22,9 +22,8 @@ export const useModal = () => {
    * @param params: 모달 파라미터
    */
   const openModal = (props: IModal & { type: ModalType }): Promise<boolean> => {
-    const id = uuid();
     return new Promise<boolean>((resolve) => {
-      const payload: IModalProps = { ...props, id, resolve };
+      const payload: IModalProps = { ...props, id: uuid(), resolve };
       dispatch({
         type: 'OPEN_MODAL',
         payload,

@@ -33,7 +33,7 @@ function modalReducer(state: IModalState, action: ModalAction): IModalState {
       const { id, decision } = action.payload;
       const modalIndex = state.modals.findIndex((modal) => modal.id === id);
       if (modalIndex > -1) {
-        state.modals[modalIndex].resolve!(decision);
+        state.modals[modalIndex].resolve(decision);
       }
       return { ...state, modals: state.modals.filter((modal) => modal.id !== id) };
     }
