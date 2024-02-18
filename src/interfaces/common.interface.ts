@@ -10,7 +10,7 @@ export interface IChildrenProps {
 /**
  * map 데이터
  */
-interface IAnyMap {
+export interface IAnyMap {
   [key: string]: any;
 }
 

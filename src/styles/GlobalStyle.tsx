@@ -21,6 +21,9 @@ const GlobalStyle = createGlobalStyle`
   li {
     list-style: none;
   }
+  #modal-portal {
+    position: absolute;
+  }
 `;
 
 export default GlobalStyle;
