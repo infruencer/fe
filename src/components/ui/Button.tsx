@@ -36,6 +36,7 @@ export const Button: FC<IButtonProps> = ({
 const StyledButton = styled.button<{ theme: string; padding?: string }>`
   width: 350px;
   height: 55px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,6 +45,7 @@ const StyledButton = styled.button<{ theme: string; padding?: string }>`
   border-width: 2px;
   border-style: solid;
   cursor: pointer;
+  line-height: 17px;
   font-size: 17px;
   font-weight: 500;
   padding: ${(props) => (props.padding ? props.padding : '1px 6px')};
@@ -73,6 +75,7 @@ const StyledButton = styled.button<{ theme: string; padding?: string }>`
           `;
       case ButtonTheme.TEXT:
         return `
+          font-family: "SCoreDream";
           border: none;
           background-color: transparent; 
           color: ${theme.colors.gray};
