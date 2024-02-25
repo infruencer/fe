@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 const Login: FC = () => {
   const router = useRouter();
   const [isEmailLogin, setIsEmailLogin] = useState(false);
+  // const;
 
   /**
    * 로그인
@@ -26,14 +27,15 @@ const Login: FC = () => {
    * @param code: 코드 데이터
    */
   const handleGoogleLoginSuccess = async (code: any) => {
-    const { status } = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code }),
-    });
-    if (status === 200) {
-      router.push('/my-diary');
-    }
+    // TODO: 백엔드 에러 수정 후 주석 해제
+    // const { status } = await fetch('/api/login', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ code }),
+    // });
+    // if (status === 200) {
+    router.push('/my-diary');
+    // }
   };
 
   /**

@@ -1,6 +1,6 @@
 'use client';
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ButtonTheme } from '@/constants/ui-button.constant';
 import { IButtonProps } from '@/interfaces/components/\bbutton.interface';
 import { theme } from '@/styles/theme';
@@ -14,6 +14,7 @@ import { theme } from '@/styles/theme';
  * @param theme: 테마
  * @param children: 자식 컴포넌트
  * @param padding: 내부 여백
+ * @param fontSize: 글자 크기
  * @author 안가을
  */
 export const Button: FC<IButtonProps> = ({
@@ -24,16 +25,17 @@ export const Button: FC<IButtonProps> = ({
   theme = ButtonTheme.WHITE,
   children,
   padding,
+  fontSize,
 }) => {
   return (
-    <StyledButton type={type} onClick={onClick} disabled={disabled} theme={theme} padding={padding}>
+    <StyledButton type={type} onClick={onClick} disabled={disabled} theme={theme} padding={padding} fontSize={fontSize}>
       {children && children}
       {text}
     </StyledButton>
   );
 };
 
-const StyledButton = styled.button<{ theme: string; padding?: string }>`
+const StyledButton = styled.button<{ theme: string; padding?: string; fontSize?: string }>`
   width: 350px;
   height: 55px;
   position: relative;
@@ -49,6 +51,11 @@ const StyledButton = styled.button<{ theme: string; padding?: string }>`
   font-size: 17px;
   font-weight: 500;
   padding: ${(props) => (props.padding ? props.padding : '1px 6px')};
+  ${(props) =>
+    props.fontSize &&
+    css`
+      font-size: ${props.fontSize};
+    `}
   ${(props) => {
     switch (props.theme) {
       case ButtonTheme.WHITE:

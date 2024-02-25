@@ -20,10 +20,14 @@ const withAuth = (Component: ComponentType) => {
         await Alert('알림', '로그인이 필요합니다.');
         router.push('/login');
       }
+      // TODO: 추후 구현
+      const response = await fetch('/api/session', {
+        method: 'GET',
+      });
     };
 
     useEffect(() => {
-      handleSession();
+      // handleSession();
     }, []);
 
     return <Component {...props} />;

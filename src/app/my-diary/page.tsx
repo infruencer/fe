@@ -4,7 +4,7 @@ import React from 'react';
 import withAuth from '../hoc/withAuth';
 
 const MyDiary = () => {
-  return <PageContainer>MyDiary</PageContainer>;
+  return <PageContainer>s</PageContainer>;
 };
 
 export default withAuth(MyDiary);
