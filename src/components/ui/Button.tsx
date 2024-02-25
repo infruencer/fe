@@ -27,8 +27,24 @@ export const Button: FC<IButtonProps> = ({
   padding,
   fontSize,
 }) => {
+  /**
+   * 클릭 이벤트
+   */
+  const handleClick = (e: any) => {
+    if (type === 'submit') return;
+    e.preventDefault();
+    onClick && onClick();
+  };
+
   return (
-    <StyledButton type={type} onClick={onClick} disabled={disabled} theme={theme} padding={padding} fontSize={fontSize}>
+    <StyledButton
+      type={type}
+      onClick={handleClick}
+      disabled={disabled}
+      theme={theme}
+      padding={padding}
+      fontSize={fontSize}
+    >
       {children && children}
       {text}
     </StyledButton>
