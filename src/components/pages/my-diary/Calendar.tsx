@@ -10,7 +10,7 @@ const Calendar = () => {
   return (
     <Container>
       <MonthBox>
-        <h2>May 2024</h2> {/* TODO: 날짜 출력 */}
+        <h2>May 2024</h2>
         <ArrowContainer>
           <button>
             <Image src={'/static/images/arrow-left.png'} width={69} height={69} alt="prev" />
