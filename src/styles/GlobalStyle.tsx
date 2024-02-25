@@ -21,6 +21,12 @@ const GlobalStyle = createGlobalStyle`
   li {
     list-style: none;
   }
+  button {
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
   #modal-portal {
     position: absolute;
   }
