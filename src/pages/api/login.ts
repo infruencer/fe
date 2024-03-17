@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     await getToken(req, res);
+    console.log(res);
     res.status(200).end();
   } catch (error) {
     console.error('error => ', error);

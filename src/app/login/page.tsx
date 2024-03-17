@@ -6,6 +6,7 @@ import { ButtonTheme } from '@/constants/ui-button.constant';
 import { Button } from '@/components/ui/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
+import { useAxios } from '@/hooks/useAxios';
 
 /**
  * 로그인 페이지
@@ -13,6 +14,7 @@ import { useRouter } from 'next/navigation';
 const Login: FC = () => {
   const router = useRouter();
   const [isEmailLogin, setIsEmailLogin] = useState(false);
+  const { fetch } = useAxios();
   // const;
 
   /**
@@ -28,12 +30,14 @@ const Login: FC = () => {
    */
   const handleGoogleLoginSuccess = async (code: any) => {
     // TODO: 백엔드 에러 수정 후 주석 해제
-    // const { status } = await fetch('/api/login', {
+    // const response = await fetch('/api/login', {
     //   method: 'POST',
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify({ code }),
     // });
     // if (status === 200) {
+    const response = await fetch({ url: `/api/v1/login/google`, method: 'GET', params: { code } });
+    console.log(response);
     router.push('/my-diary');
     // }
   };
