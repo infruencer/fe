@@ -6,7 +6,6 @@ import { ButtonTheme } from '@/constants/ui-button.constant';
 import { Button } from '@/components/ui/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
-import { useAxios } from '@/hooks/useFetch';
 
 /**
  * 로그인 페이지
