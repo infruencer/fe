@@ -19,22 +19,21 @@ const db = getDatabase(app);
  * 파이어베이스 데이터 반환 함수
  * @param key: 데이터 key
  */
-const getFirebaseData = (key: string) => {
+const getFirebaseData = async (key: string) => {
   const dbRef = ref(db);
-  let data = '';
-  get(child(dbRef, key))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        data = snapshot.val();
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  return data;
+  try {
+    const snapshot = await get(child(dbRef, key));
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+      return snapshot.val(); // Return the data directly from the async function
+    } else {
+      console.log('No data available');
+      return ''; // Return an empty string if no data is available
+    }
+  } catch (error) {
+    console.error(error);
+    return ''; // Return an empty string in case of an error
+  }
 };
 
 /**

@@ -10,10 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // TODO: 사용자 정보 조회
     const response = await fetch(`${API_BASE_URL}/api/v1/member/me`, {
-      // headers: {
-      //   'Authorization': `Bearer ${token}`,
-      //   'Content-Type': 'application/json'
-      // }
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     }).then((res) => res.json());
     console.log('response => ', response);
     res.status(200).end();

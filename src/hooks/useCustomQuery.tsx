@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
-import { useAxios } from './useAxios';
+import { useFetch } from './useFetch';
 
 /**
  * useQuery 커스텀 hook
@@ -9,7 +9,7 @@ import { useAxios } from './useAxios';
  * @author 안가을
  */
 const useCustomQuery = (key: string, axiosOptions: AxiosRequestConfig) => {
-  const { fetch } = useAxios();
+  const { fetch } = useFetch();
   const queryOptions = {
     queryKey: [key],
     queryFn: async () => {

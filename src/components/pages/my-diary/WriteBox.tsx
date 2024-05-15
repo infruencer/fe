@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/Button';
 import ButtonGroup from '@/components/ui/Buttons';
 import Confirm from '@/components/ui/Confirm';
 import { ButtonTheme } from '@/constants/ui-button.constant';
+import { useFetch } from '@/hooks/useFetch';
 import { useModal } from '@/hooks/useModal';
 import { theme } from '@/styles/theme';
 import React, { FC, useState } from 'react';
@@ -12,6 +13,7 @@ import styled from 'styled-components';
  */
 const WriteBox: FC = () => {
   const { Alert, Confirm } = useModal();
+  // const { fetch } = useFetch();
   const [text, setText] = useState('');
   const [length, setLength] = useState(0);
   const maxLength = 5000;
@@ -42,6 +44,13 @@ const WriteBox: FC = () => {
    */
   const handleWrite = async () => {
     if (!(await Confirm('일기 작성', '작성을 완료하시겠습니까?'))) return;
+    // const response = await fetch({ url: `/api/v1/diaries`, method: 'POST' });
+    const response = await fetch('http://3.38.243.167/api/v1/diaries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'test', contents: 'test contents' }),
+    });
+    console.log(response);
     // TODO: api 호출
     await Alert('일기 작성 완료', '작성이 완료되었습니다.');
   };
@@ -79,6 +88,8 @@ const TextArea = styled.textarea`
   padding: 13px 20px;
   border: 1px solid #cdd5e2;
   font-size: 20px;
+  outline: none;
+  resize: none;
 `;
 
 const LengthWrapper = styled.div`

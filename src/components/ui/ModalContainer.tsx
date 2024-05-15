@@ -26,7 +26,7 @@ const ModalContainer: FC = () => {
       {/* 모달 상태를 가져와서 react portal 을 생성하여 모달 출력 */}
       {modalState.modals.map((modal, index) => {
         const ModalComponent =
-          modal.type === ModalType.MODAL ? Alert : modal.type === ModalType.CONFIRM ? Confirm : Modal;
+          modal.type === ModalType.ALERT ? Alert : modal.type === ModalType.CONFIRM ? Confirm : Modal;
         return createPortal(
           <>
             {/* 마지막 최상단 모달에만 오버레이 출력 */}

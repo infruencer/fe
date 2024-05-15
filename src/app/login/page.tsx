@@ -6,7 +6,7 @@ import { ButtonTheme } from '@/constants/ui-button.constant';
 import { Button } from '@/components/ui/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
-import { useAxios } from '@/hooks/useAxios';
+import { useAxios } from '@/hooks/useFetch';
 
 /**
  * 로그인 페이지
@@ -14,8 +14,7 @@ import { useAxios } from '@/hooks/useAxios';
 const Login: FC = () => {
   const router = useRouter();
   const [isEmailLogin, setIsEmailLogin] = useState(false);
-  const { fetch } = useAxios();
-  // const;
+  // const { fetch } = useAxios();
 
   /**
    * 로그인
@@ -29,15 +28,14 @@ const Login: FC = () => {
    * @param code: 코드 데이터
    */
   const handleGoogleLoginSuccess = async (code: any) => {
-    // TODO: 백엔드 에러 수정 후 주석 해제
-    // const response = await fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ code }),
-    // });
-    // if (status === 200) {
-    const response = await fetch({ url: `/api/v1/login/google`, method: 'GET', params: { code } });
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+    // const response = await fetch({ url: `/api/v1/login/google`, method: 'GET', params: { code } });
     console.log(response);
+    // if (response.status === 200) {
     router.push('/my-diary');
     // }
   };

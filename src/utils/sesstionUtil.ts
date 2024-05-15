@@ -14,21 +14,18 @@ const issueToken = async (req: NextApiRequest, res: NextApiResponse) => {
       const response = await fetch(`${API_BASE_URL}/api/v1/login/google?code=${req.body.code}`).then((res) =>
         res.json(),
       );
-      if (response && response.accessToken) {
+      console.log('accessToken in issueToken => ', response.data.accessToken);
+      if (response && response.data && response.data.accessToken) {
+        const accessToken = response.data.accessToken;
         // 토큰 데이터 암호화
-        const cookieKey = CryptoJS.AES.encrypt(JSON.stringify(response.accessToken), SECRET_KEY)
-          .toString()
-          .replaceAll('/', ''); // 파이어베이스 경로 인식 막기
-        console.log('cookieKey => ', cookieKey);
+        const cookieKey = CryptoJS.AES.encrypt(JSON.stringify(accessToken), SECRET_KEY).toString().replaceAll('/', ''); // 파이어베이스 경로 인식 막기
 
         // 쿠키에 토큰 키 저장
         res.setHeader('Set-Cookie', `TOKEN_KEY=${cookieKey}; Max-Age=3600; Path=/`);
 
         // 파이어베이스에 토큰 데이터 저장
-        setFirebaseData(cookieKey, response.accessToken);
+        setFirebaseData(cookieKey, accessToken);
       } else {
-        console.log(response);
-        console.log(response.accessToken);
         console.error('fail issue access token');
       }
     } catch (error) {
@@ -42,7 +39,7 @@ const issueToken = async (req: NextApiRequest, res: NextApiResponse) => {
 /**
  * firebase 에 저장되어 있는 토큰 가져오기
  */
-const getStoredToken = (req: NextApiRequest) => {
+const getStoredToken = async (req: NextApiRequest) => {
   if (req.headers.cookie) {
     const cookies = req.headers.cookie.toString();
     // 쿠키에 저장된 토큰 키 가져오기
@@ -50,7 +47,8 @@ const getStoredToken = (req: NextApiRequest) => {
     if (tokenKeyMatch) {
       const tokenKey = tokenKeyMatch[1];
       // 파이어베이스에서 토큰 데이터 가져오기
-      const token = getFirebaseData(tokenKey);
+      const token = await getFirebaseData(tokenKey);
+      console.log('token in getStoredToken => ', token);
       if (token) {
         return token;
       } else {
