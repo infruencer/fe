@@ -1,9 +1,10 @@
 'use client';
+
 import { useModal } from '@/hooks/useModal';
-import { RootState } from '@/redux/store';
+import { setUser } from '@/redux/auth';
 import { useRouter } from 'next/navigation';
 import React, { ComponentType, FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 /**
  * 인증이 필요한 페이지에서 사용할 HOC
@@ -12,22 +13,20 @@ import { useSelector } from 'react-redux';
 const withAuth = (Component: ComponentType) => {
   const WithAuth: FC = (props) => {
     const { Alert } = useModal();
-    const token = useSelector((state: RootState) => state.auth.token);
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const handleSession = async () => {
-      if (!token) {
+      const response: any = await fetch('/api/session').then((res) => res.json());
+      if (!response.data.accessToken) {
         await Alert('알림', '로그인이 필요합니다.');
         router.push('/login');
       }
-      // TODO: 추후 구현
-      const response = await fetch('/api/session', {
-        method: 'GET',
-      });
+      dispatch(setUser(response.data));
     };
 
     useEffect(() => {
-      // handleSession();
+      handleSession();
     }, []);
 
     return <Component {...props} />;

@@ -11,8 +11,7 @@ import styled from 'styled-components';
  * 다이어리 작성 영역 컴포넌트
  */
 const WriteBox: FC = () => {
-  const { Alert, Confirm } = useModal();
-  // const { fetch } = useFetch();
+  const { Confirm } = useModal();
   const [text, setText] = useState('');
   const [length, setLength] = useState(0);
   const maxLength = 5000;
