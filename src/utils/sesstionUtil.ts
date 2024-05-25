@@ -15,6 +15,7 @@ const issueToken = async (req: NextApiRequest, res: NextApiResponse) => {
       if (response && response.data && response.data.accessToken) {
         const accessToken = response.data.accessToken;
         console.log('issue token => ', accessToken);
+
         // 토큰 데이터 암호화
         const cookieKey = CryptoJS.AES.encrypt(JSON.stringify(accessToken), SECRET_KEY).toString().replaceAll('/', ''); // 파이어베이스 경로 인식 막기
 

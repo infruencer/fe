@@ -1,6 +1,7 @@
 'use client';
 
 import { NETWORK } from '@/constants/api';
+import store from '@/redux/store';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 export const axiosInstance = axios.create({
@@ -12,11 +13,12 @@ axiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     if (!config.headers || config.headers.Authorization) return config;
 
-    const token = await fetch('/api/token').then((res) => res.json());
-    if (!token) {
+    const state = store.getState();
+    const { accessToken } = state.auth;
+    if (!accessToken) {
       throw new Error('token not found');
     }
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
   (error: AxiosError) => {

@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const auth = createSlice({
   name: 'auth',
-  initialState: { token: '' },
+  initialState: { accessToken: '' },
   reducers: {
-    setToken(state, action: PayloadAction<string>) {
-      state.token = action.payload;
+    setUser(state, action: PayloadAction<any>) {
+      return (state = action.payload);
     },
   },
 });
 
-export const { setToken } = auth.actions;
+export const { setUser } = auth.actions;
 
 export default auth;
