@@ -22,17 +22,16 @@ const db = getDatabase(app);
 const getFirebaseData = async (key: string) => {
   const dbRef = ref(db);
   try {
-    const snapshot = await get(child(dbRef, key));
+    const snapshot = await get(child(dbRef, `/tokens/${key}`));
     if (snapshot.exists()) {
-      console.log(snapshot.val());
-      return snapshot.val(); // Return the data directly from the async function
+      return snapshot.val();
     } else {
-      console.log('No data available');
-      return ''; // Return an empty string if no data is available
+      console.log('No data in firebase');
+      return '';
     }
   } catch (error) {
     console.error(error);
-    return ''; // Return an empty string in case of an error
+    return '';
   }
 };
 
@@ -42,7 +41,7 @@ const getFirebaseData = async (key: string) => {
  * @param value: 데이터 값
  */
 const setFirebaseData = async (key: string, value: string) => {
-  await set(ref(db, `tokens/${key}`), value);
+  await set(ref(db, `/tokens/${key}`), value);
 };
 
 /**

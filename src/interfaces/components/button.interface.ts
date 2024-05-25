@@ -1,4 +1,4 @@
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { ReactNode } from 'react';
 
 /**

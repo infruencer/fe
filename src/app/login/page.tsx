@@ -1,8 +1,9 @@
 'use client';
+
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { Button } from '@/components/ui/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
@@ -13,7 +14,6 @@ import { useRouter } from 'next/navigation';
 const Login: FC = () => {
   const router = useRouter();
   const [isEmailLogin, setIsEmailLogin] = useState(false);
-  // const { fetch } = useAxios();
 
   /**
    * 로그인
@@ -27,16 +27,14 @@ const Login: FC = () => {
    * @param code: 코드 데이터
    */
   const handleGoogleLoginSuccess = async (code: any) => {
-    const response = await fetch('/api/login', {
+    const response = await fetch('/api/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code }),
     });
-    // const response = await fetch({ url: `/api/v1/login/google`, method: 'GET', params: { code } });
-    console.log(response);
-    // if (response.status === 200) {
-    router.push('/my-diary');
-    // }
+    if (response.status === 200) {
+      router.push('/my-diary');
+    }
   };
 
   /**

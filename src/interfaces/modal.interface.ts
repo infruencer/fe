@@ -1,6 +1,6 @@
 import { ElementType } from 'react';
 import { IAnyMap } from './common.interface';
-import { MessageType, ModalType } from '@/constants/ui-modal.constant';
+import { MessageType, ModalType } from '@/constants/ui/modal.constant';
 
 /**
  * 공통 모달 오픈 시 파라미터

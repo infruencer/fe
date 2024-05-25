@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button';
 import { DiaryType } from '@/constants/pages/diary.constant';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { IEmptyBoxProps } from '@/interfaces/pages/diary.interface';
 import React, { FC } from 'react';
 import styled from 'styled-components';

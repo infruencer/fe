@@ -1,51 +1,95 @@
-import { IResponse } from '@/interfaces/common.interface';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { useRef, useState } from 'react';
+import { axiosInstance } from '@/utils/axiosInstance';
+import { AxiosResponse } from 'axios';
+import { useRef, useEffect } from 'react';
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
+interface FetchOptions<T> {
+  url: string;
+  method?: 'get' | 'post' | 'put' | 'delete';
+  params?: any;
+  callback?: Record<number, string | Array<{ status: string; message: string }>>;
+}
 
 /**
  * api 통신을 위한 커스텀 훅
- * @param config: axios 요청 데이터
- * @author 안가을
+ * @param options
  */
-export const useFetch: any = () => {
-  const [loading, setLoading] = useState(true);
+const useFetch = <T,>() => {
   const controllerRef = useRef(new AbortController());
-  const cancel = () => controllerRef.current.abort();
 
-  const getToken = async () => {
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    return response;
+  const fetchData = async ({ url, method = 'get', params = null, callback = {} }: FetchOptions<T>): Promise<T> => {
+    let result: AxiosResponse<T>;
+    switch (method.toLowerCase()) {
+      case 'get':
+        result = await axiosInstance.get(url);
+        break;
+      case 'post':
+        result = await axiosInstance.post(url, params);
+        break;
+      case 'put':
+        result = await axiosInstance.put(url, params);
+        break;
+      case 'delete':
+        result = await axiosInstance.delete(url);
+        break;
+      default:
+        throw new Error('Invalid HTTP method');
+    }
+
+    handleResponse(result.status, result.data, callback);
+    return result.data;
   };
 
-  const fetchData = async (params: AxiosRequestConfig) => {
-    try {
-      setLoading(true);
-      const token = await getToken();
-      console.log('tokentoken=> ', token);
-      const result: AxiosResponse<IResponse> = await axios.request({
-        ...params,
-        headers: { ...params.headers, Authorization: `Bearer ${token}` },
-        baseURL: API_BASE_URL,
-        signal: controllerRef.current.signal,
-      });
-      console.log(result.data);
-      return result.data;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+  const handleResponse = (
+    status: number,
+    responseData: any,
+    callback: Record<number, string | Array<{ status: string; message: string }>>,
+  ) => {
+    if (callback[status]) {
+      const responseCallback = callback[status];
+      if (Array.isArray(responseCallback)) {
+        const matchedCallback = responseCallback.find(({ status: cbStatus }) => responseData?.status === cbStatus);
+        if (matchedCallback) {
+          console.log(`Status: ${matchedCallback.status}, Message: ${matchedCallback.message}`);
+        }
+      } else {
+        console.log(responseCallback);
+      }
+    } else {
+      switch (status) {
+        case 200:
+          console.log('Success');
+          break;
+        case 201:
+          console.log('Created');
+          break;
+        case 400:
+          console.log('Bad Request');
+          break;
+        case 401:
+          console.log('Unauthorized');
+          break;
+        case 403:
+          console.log('Forbidden');
+          break;
+        case 404:
+          console.log('Not Found');
+          break;
+        case 500:
+          console.log('Internal Server Error');
+          break;
+        default:
+          console.log('Unknown status code:', status);
+      }
     }
   };
-  // const fetchQuery = (key: string, axiosOptions: AxiosRequestConfig): UseQueryResult<T, Error> => {
-  //   return useQuery<T, Error>(key, () => fetchData(axiosOptions), {
-  //     refetchOnWindowFocus: false,
-  //   });
-  // };
-  return { cancel, fetch: fetchData, loading };
+
+  useEffect(() => {
+    return () => {
+      controllerRef.current.abort();
+    };
+  }, []);
+
+  return fetchData;
 };
+
+export default useFetch;

@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import ButtonGroup from '@/components/ui/Buttons';
-import Confirm from '@/components/ui/Confirm';
-import { ButtonTheme } from '@/constants/ui-button.constant';
-import { useFetch } from '@/hooks/useFetch';
+import { ButtonTheme } from '@/constants/ui/button.constant';
+import { usePostDiaryMutation } from '@/hooks/queries/usePostDiaryMutation';
 import { useModal } from '@/hooks/useModal';
 import { theme } from '@/styles/theme';
 import React, { FC, useState } from 'react';
@@ -39,20 +38,14 @@ const WriteBox: FC = () => {
     }
   };
 
+  const { mutate: createNewDiaryAPI } = usePostDiaryMutation();
+
   /**
    * 작성 완료 버튼 클릭 이벤트 함수
    */
   const handleWrite = async () => {
     if (!(await Confirm('일기 작성', '작성을 완료하시겠습니까?'))) return;
-    // const response = await fetch({ url: `/api/v1/diaries`, method: 'POST' });
-    const response = await fetch('http://3.38.243.167/api/v1/diaries', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: 'test', contents: 'test contents' }),
-    });
-    console.log(response);
-    // TODO: api 호출
-    await Alert('일기 작성 완료', '작성이 완료되었습니다.');
+    createNewDiaryAPI({ title: 'test', contents: 'test contents' });
   };
 
   return (

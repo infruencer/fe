@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { IModalProps } from '@/interfaces/modal.interface';
 import { useModal } from '@/hooks/useModal';
 import { Button } from './Button';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import ButtonGroup from './Buttons';
 import styled from 'styled-components';
 import Space from './Space';

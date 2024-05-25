@@ -1,5 +1,5 @@
 import { ModalContext, ModalDispatch } from '@/components/ui/ModalProvider';
-import { MessageType, ModalType } from '@/constants/ui-modal.constant';
+import { MessageType, ModalType } from '@/constants/ui/modal.constant';
 import { IAnyMap } from '@/interfaces/common.interface';
 import { IModal, IModalProps } from '@/interfaces/modal.interface';
 import { ElementType, useContext } from 'react';

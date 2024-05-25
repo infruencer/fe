@@ -11,12 +11,10 @@ const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY || '';
 const issueToken = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.body.code) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/login/google?code=${req.body.code}`).then((res) =>
-        res.json(),
-      );
-      console.log('accessToken in issueToken => ', response.data.accessToken);
+      const response = await fetch(`${API_BASE_URL}/login/google?code=${req.body.code}`).then((res) => res.json());
       if (response && response.data && response.data.accessToken) {
         const accessToken = response.data.accessToken;
+        console.log('issue token => ', accessToken);
         // 토큰 데이터 암호화
         const cookieKey = CryptoJS.AES.encrypt(JSON.stringify(accessToken), SECRET_KEY).toString().replaceAll('/', ''); // 파이어베이스 경로 인식 막기
 
@@ -48,7 +46,7 @@ const getStoredToken = async (req: NextApiRequest) => {
       const tokenKey = tokenKeyMatch[1];
       // 파이어베이스에서 토큰 데이터 가져오기
       const token = await getFirebaseData(tokenKey);
-      console.log('token in getStoredToken => ', token);
+      console.log('get token in firebase => ', token);
       if (token) {
         return token;
       } else {
@@ -71,7 +69,7 @@ const getToken = async (req: NextApiRequest, res: NextApiResponse) => {
     await issueToken(req, res);
     // 저장되어 있는 토큰 가져오기
   } else {
-    getStoredToken(req);
+    return getStoredToken(req);
   }
 };
 

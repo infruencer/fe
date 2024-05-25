@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Alert from './Alert';
 import Confirm from './Confirm';
-import { ModalType } from '@/constants/ui-modal.constant';
+import { ModalType } from '@/constants/ui/modal.constant';
 import Modal from './Modal';
 import styled from 'styled-components';
 import { ModalContext } from './ModalProvider';
