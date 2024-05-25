@@ -1,8 +1,9 @@
 'use client';
+
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { Button } from '@/components/ui/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
@@ -13,7 +14,6 @@ import { useRouter } from 'next/navigation';
 const Login: FC = () => {
   const router = useRouter();
   const [isEmailLogin, setIsEmailLogin] = useState(false);
-  // const;
 
   /**
    * 로그인
@@ -27,15 +27,14 @@ const Login: FC = () => {
    * @param code: 코드 데이터
    */
   const handleGoogleLoginSuccess = async (code: any) => {
-    // TODO: 백엔드 에러 수정 후 주석 해제
-    // const { status } = await fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ code }),
-    // });
-    // if (status === 200) {
-    router.push('/my-diary');
-    // }
+    const response = await fetch('/api/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+    if (response.status === 200) {
+      router.push('/my-diary');
+    }
   };
 
   /**

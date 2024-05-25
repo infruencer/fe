@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Alert from './Alert';
 import Confirm from './Confirm';
-import { ModalType } from '@/constants/ui-modal.constant';
+import { ModalType } from '@/constants/ui/modal.constant';
 import Modal from './Modal';
 import styled from 'styled-components';
 import { ModalContext } from './ModalProvider';
@@ -26,7 +26,7 @@ const ModalContainer: FC = () => {
       {/* 모달 상태를 가져와서 react portal 을 생성하여 모달 출력 */}
       {modalState.modals.map((modal, index) => {
         const ModalComponent =
-          modal.type === ModalType.MODAL ? Alert : modal.type === ModalType.CONFIRM ? Confirm : Modal;
+          modal.type === ModalType.ALERT ? Alert : modal.type === ModalType.CONFIRM ? Confirm : Modal;
         return createPortal(
           <>
             {/* 마지막 최상단 모달에만 오버레이 출력 */}

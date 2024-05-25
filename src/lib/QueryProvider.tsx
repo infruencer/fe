@@ -20,8 +20,8 @@ const queryClient = new QueryClient({
 const QueryProvider: FC<IChildrenProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
       {children}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

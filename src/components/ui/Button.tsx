@@ -1,7 +1,7 @@
 'use client';
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { IButtonProps } from '@/interfaces/components/\bbutton.interface';
 import { theme } from '@/styles/theme';
 

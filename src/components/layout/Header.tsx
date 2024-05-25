@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { FC, Fragment } from 'react';
 import { styled } from 'styled-components';
 import { usePathname, useRouter } from 'next/navigation';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { Button } from '../ui/Button';
 import { theme } from '@/styles/theme';
 import menus from '@/datas/menu.data';

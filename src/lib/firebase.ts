@@ -19,22 +19,20 @@ const db = getDatabase(app);
  * 파이어베이스 데이터 반환 함수
  * @param key: 데이터 key
  */
-const getFirebaseData = (key: string) => {
+const getFirebaseData = async (key: string) => {
   const dbRef = ref(db);
-  let data = '';
-  get(child(dbRef, key))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        data = snapshot.val();
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  return data;
+  try {
+    const snapshot = await get(child(dbRef, `/tokens/${key}`));
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      console.log('No data in firebase');
+      return '';
+    }
+  } catch (error) {
+    console.error(error);
+    return '';
+  }
 };
 
 /**
@@ -43,7 +41,7 @@ const getFirebaseData = (key: string) => {
  * @param value: 데이터 값
  */
 const setFirebaseData = async (key: string, value: string) => {
-  await set(ref(db, `tokens/${key}`), value);
+  await set(ref(db, `/tokens/${key}`), value);
 };
 
 /**

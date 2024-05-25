@@ -19,18 +19,16 @@ export interface IAnyMap {
  */
 export interface IResponse {
   success: boolean; // 상태
-  code?: string; // 응답 코드
-  message?: string; // 응답 메시지
-  data?: any; // 응답 데이터
-  error?: IResponseError; // 에러 데이터
+  data: any; // 응답 데이터
+  error: IResponseError; // 에러 데이터
 }
 
 /**
  * api 응답 에러 데이터
  */
 export interface IResponseError {
-  code?: string; // 응답 코드
-  message?: string; // 응답 메시지
+  code: string; // 응답 코드
+  message: string; // 응답 메시지
   validations: IErrorValidation[]; // 유효성 에러 데이터
 }
 

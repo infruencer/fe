@@ -33,4 +33,6 @@ const SearchInput = styled.input`
   border: none;
   outline: none;
   font-size: 17px;
+  flex-grow: 1;
+  padding-right: 14px;
 `;

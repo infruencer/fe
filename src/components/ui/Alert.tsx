@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { IModalProps } from '@/interfaces/modal.interface';
 import { useModal } from '@/hooks/useModal';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { Button } from './Button';
 import Space from './Space';
 import styled from 'styled-components';

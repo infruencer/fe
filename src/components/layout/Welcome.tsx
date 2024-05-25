@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import { ButtonTheme } from '@/constants/ui-button.constant';
+import { ButtonTheme } from '@/constants/ui/button.constant';
 import { Button } from '../ui/Button';
 import { useModal } from '@/hooks/useModal';
 
